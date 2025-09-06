@@ -3,8 +3,8 @@
 {% block title %}Login - EcoFinds{% endblock %}
 
 {% block content %}
-<div class="max-w-md mx-auto bg-green-50 rounded-xl shadow-lg p-8 mt-12">
-    <h1 class="text-3xl font-bold text-center mb-6 text-green-800">Sign In</h1>
+<div class="w-full max-w-md mx-auto bg-green-50 rounded-xl shadow-lg p-6 sm:p-8">
+    <h1 class="text-2xl sm:text-3xl font-bold text-center mb-6 text-green-800">Sign In</h1>
 
     {% include "components/error.html" %}
 
@@ -17,7 +17,7 @@
                     <i class="fa-solid fa-envelope"></i>
                 </span>
                 <input type="email" id="email" name="email" required
-                       class="block w-full pl-10 pr-3 py-2 border border-green-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500">
+                       class="block w-full pl-10 pr-3 py-2 sm:py-3 border border-green-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 text-sm sm:text-base">
             </div>
         </div>
 
@@ -29,21 +29,21 @@
                     <i class="fa-solid fa-lock"></i>
                 </span>
                 <input type="password" id="password" name="password" required
-                       class="block w-full pl-10 pr-3 py-2 border border-green-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500">
+                       class="block w-full pl-10 pr-3 py-2 sm:py-3 border border-green-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 text-sm sm:text-base">
             </div>
         </div>
 
         <!-- Submit Button -->
         <div>
             <button type="submit"
-                    class="w-full flex justify-center items-center gap-2 py-2 px-4 rounded-md text-sm font-medium text-white bg-green-700 hover:bg-green-800 focus:outline-none transition">
+                    class="w-full flex justify-center items-center gap-2 py-2 sm:py-3 px-4 rounded-md text-sm sm:text-base font-medium text-white bg-green-700 hover:bg-green-800 focus:outline-none transition">
                 <i class="fa-solid fa-right-to-bracket"></i> Login
             </button>
         </div>
     </form>
 
     <!-- Register Link -->
-    <div class="mt-6 text-center">
+    <div class="mt-4 sm:mt-6 text-center">
         <p class="text-sm text-green-800">
             Don’t have an account?
             <a href="/register" class="font-medium text-green-700 hover:text-green-900">
@@ -52,4 +52,5 @@
         </p>
     </div>
 </div>
+
 {% endblock %}

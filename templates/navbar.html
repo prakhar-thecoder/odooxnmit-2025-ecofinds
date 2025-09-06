@@ -1,38 +1,80 @@
-<nav class="flex justify-between items-center px-6 py-4 bg-green-50 shadow-md">
-  <!-- Logo -->
-  <a class="flex items-center space-x-3" href="/">
-    <img src="{{ url_for('static', filename='images/logo.jpg') }}" 
-         alt="EcoFinds Logo" 
-         class="h-14 w-14 object-cover rounded-full border-2 border-green-700">
-    <span class="text-2xl font-bold text-green-700">EcoFinds</span>
-  </a>
-
-  <!-- Navigation Links -->
-  <div class="flex items-center gap-6 text-green-800 font-medium">
-    <a href="/" class="flex items-center gap-1 hover:text-green-600 transition">
-      <i class="fa-solid fa-box"></i> Products
+<nav class="bg-green-50 shadow-md px-4 py-3 mb-12">
+  <div class="max-w-7xl mx-auto flex justify-between items-center">
+    <!-- Logo -->
+    <a class="flex items-center space-x-2" href="/">
+      <img src="{{ url_for('static', filename='images/logo.jpg') }}" 
+           alt="EcoFinds Logo" 
+           class="h-10 w-10 sm:h-12 sm:w-12 object-cover rounded-full border-2 border-green-700">
+      <span class="text-xl sm:text-2xl font-bold text-green-700">EcoFinds</span>
     </a>
 
+    <!-- Desktop Links -->
+    <div class="hidden md:flex items-center gap-4 text-green-800 font-medium text-sm sm:text-base">
+      <a href="/" class="flex items-center gap-1 hover:text-green-600 transition">
+        <i class="fa-solid fa-box"></i> Products
+      </a>
+      {% if current_user %}
+        <a href="/purchases" class="flex items-center gap-1 hover:text-green-600 transition">
+          <i class="fa-solid fa-receipt"></i> Purchases
+        </a>
+        <a href="/profile" class="flex items-center gap-1 hover:text-green-600 transition">
+          <i class="fa-solid fa-user"></i> Profile
+        </a>
+        <a href="/cart" class="flex items-center gap-1 hover:text-green-600 transition">
+          <i class="fa-solid fa-cart-shopping"></i> Cart
+        </a>
+        <a href="/logout" class="flex items-center gap-1 hover:text-green-600 transition">
+          <i class="fa-solid fa-right-from-bracket"></i> Logout
+        </a>
+      {% else %}
+        <a href="/login" class="flex items-center gap-1 hover:text-green-600 transition">
+          <i class="fa-solid fa-right-to-bracket"></i> Login
+        </a>
+        <a href="/register" class="flex items-center gap-1 hover:text-green-600 transition">
+          <i class="fa-solid fa-user-plus"></i> Register
+        </a>
+      {% endif %}
+    </div>
+
+    <!-- Mobile Hamburger -->
+    <div class="md:hidden">
+      <button id="mobileMenuButton" class="text-green-800 focus:outline-none">
+        <i class="fa-solid fa-bars fa-lg"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobileMenu" class="hidden md:hidden mt-2 space-y-1 px-2">
+    <a href="/" class="block py-2 px-3 rounded hover:bg-green-100 flex items-center gap-2 text-green-800 text-sm">
+      <i class="fa-solid fa-box"></i> Products
+    </a>
     {% if current_user %}
-      <a href="/purchases" class="flex items-center gap-1 hover:text-green-600 transition">
+      <a href="/purchases" class="block py-2 px-3 rounded hover:bg-green-100 flex items-center gap-2 text-green-800 text-sm">
         <i class="fa-solid fa-receipt"></i> Purchases
       </a>
-      <a href="/profile" class="flex items-center gap-1 hover:text-green-600 transition">
+      <a href="/profile" class="block py-2 px-3 rounded hover:bg-green-100 flex items-center gap-2 text-green-800 text-sm">
         <i class="fa-solid fa-user"></i> Profile
       </a>
-      <a href="/cart" class="flex items-center gap-1 hover:text-green-600 transition">
+      <a href="/cart" class="block py-2 px-3 rounded hover:bg-green-100 flex items-center gap-2 text-green-800 text-sm">
         <i class="fa-solid fa-cart-shopping"></i> Cart
       </a>
-      <a href="/logout" class="flex items-center gap-1 hover:text-green-600 transition">
+      <a href="/logout" class="block py-2 px-3 rounded hover:bg-green-100 flex items-center gap-2 text-green-800 text-sm">
         <i class="fa-solid fa-right-from-bracket"></i> Logout
       </a>
     {% else %}
-      <a href="/login" class="flex items-center gap-1 hover:text-green-600 transition">
+      <a href="/login" class="block py-2 px-3 rounded hover:bg-green-100 flex items-center gap-2 text-green-800 text-sm">
         <i class="fa-solid fa-right-to-bracket"></i> Login
       </a>
-      <a href="/register" class="flex items-center gap-1 hover:text-green-600 transition">
+      <a href="/register" class="block py-2 px-3 rounded hover:bg-green-100 flex items-center gap-2 text-green-800 text-sm">
         <i class="fa-solid fa-user-plus"></i> Register
       </a>
     {% endif %}
   </div>
 </nav>
+
+<script>
+  const mobileMenuButton = document.getElementById('mobileMenuButton');
+  const mobileMenu = document.getElementById('mobileMenu');
+  mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+</script>

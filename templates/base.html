@@ -4,15 +4,21 @@
   <meta charset="UTF-8">
   <title>{% block title %}EcoFinds{% endblock %}</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- Font Awesome Free CDN -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"  />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
-<body class="text-gray-900">
+<body class="flex flex-col min-h-screen text-gray-900">
+
   {% include "navbar.html" %}
-  <main class="p-6">
+
+  <!-- Make main flex-grow to take remaining space -->
+  <main class="flex-grow w-full px-6">
     {% block content %}{% endblock %}
   </main>
+
   {% include "footer.html" %}
+
 </body>
 </html>
