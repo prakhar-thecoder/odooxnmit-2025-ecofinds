@@ -1,8 +1,9 @@
 {% if errors %}
-<div class="mb-4">
+<div class="mb-4 space-y-2">
   {% for error in errors %}
-  <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded mb-2">
-    {{ error }}
+  <div class="flex items-center bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded shadow">
+    <i class="fa-solid fa-triangle-exclamation mr-2"></i>
+    <span>{{ error }}</span>
   </div>
   {% endfor %}
 </div>

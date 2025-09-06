@@ -1,24 +1,38 @@
- <nav class="flex justify-between items-center px-6 py-4 bg-white shadow">
-    <div class="flex items-center space-x-2">
-      <img src="{{ url_for('static', filename='images/logo.jpg') }}" 
-           alt="EcoFinds Logo" 
-           class="h-14 w-13 object-cover rounded-full">
-      <span class="text-xl font-bold text-green-700">EcoFinds</span>
-    </div>
-    <div class="flex items-center gap-4">
-      <a href="/" class="hover:text-green-600  px-2">Products</a>
+<nav class="flex justify-between items-center px-6 py-4 bg-green-50 shadow-md">
+  <!-- Logo -->
+  <a class="flex items-center space-x-3" href="/">
+    <img src="{{ url_for('static', filename='images/logo.jpg') }}" 
+         alt="EcoFinds Logo" 
+         class="h-14 w-14 object-cover rounded-full border-2 border-green-700">
+    <span class="text-2xl font-bold text-green-700">EcoFinds</span>
+  </a>
 
-      {% if current_user %}
-        <a href="/purchases" class="hover:text-green-600 px-2">Purchases</a>
-        <a href="/profile" class="hover:text-green-600 px-2">Profile</a>
-        <a href="/logout" class="hover:text-green-600 px-2">Logout</a>
-        <a href="/cart" class="hover:text-green-600 px-2">Cart</a>
+  <!-- Navigation Links -->
+  <div class="flex items-center gap-6 text-green-800 font-medium">
+    <a href="/" class="flex items-center gap-1 hover:text-green-600 transition">
+      <i class="fa-solid fa-box"></i> Products
+    </a>
 
-       
-      </button>
-      {% else %}
-      <a href="/login" class="hover:text-green-600 px-2">Login</a>
-      <a href="/register" class="hover:text-green-600 px-2">Register</a>
-      {% endif %}
-    </div>
-  </nav>
+    {% if current_user %}
+      <a href="/purchases" class="flex items-center gap-1 hover:text-green-600 transition">
+        <i class="fa-solid fa-receipt"></i> Purchases
+      </a>
+      <a href="/profile" class="flex items-center gap-1 hover:text-green-600 transition">
+        <i class="fa-solid fa-user"></i> Profile
+      </a>
+      <a href="/cart" class="flex items-center gap-1 hover:text-green-600 transition">
+        <i class="fa-solid fa-cart-shopping"></i> Cart
+      </a>
+      <a href="/logout" class="flex items-center gap-1 hover:text-green-600 transition">
+        <i class="fa-solid fa-right-from-bracket"></i> Logout
+      </a>
+    {% else %}
+      <a href="/login" class="flex items-center gap-1 hover:text-green-600 transition">
+        <i class="fa-solid fa-right-to-bracket"></i> Login
+      </a>
+      <a href="/register" class="flex items-center gap-1 hover:text-green-600 transition">
+        <i class="fa-solid fa-user-plus"></i> Register
+      </a>
+    {% endif %}
+  </div>
+</nav>

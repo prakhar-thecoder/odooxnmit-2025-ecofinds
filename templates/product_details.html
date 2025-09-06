@@ -1,18 +1,18 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="min-h-screen bg-gray-50 text-gray-800 flex flex-col items-center px-6 py-10">
+<div class="min-h-screen bg-green-50 text-gray-800 flex flex-col items-center px-6 py-10">
 
   <!-- Product Title -->
-  <h1 class="text-2xl font-bold mb-6">{{ product.title }}</h1>
+  <h1 class="text-3xl font-bold mb-6 text-green-800">{{ product.title }}</h1>
 
   <!-- 🖼️ Product Image with Dots -->
-  <div class="w-full max-w-lg bg-white border rounded-xl shadow p-4 flex flex-col items-center">
+  <div class="w-full max-w-lg bg-white border border-green-200 rounded-xl shadow p-4 flex flex-col items-center">
     <div id="productImageWrapper" class="relative w-full flex items-center justify-center">
       <img id="productImage" 
            src="{{ url_for('static', filename=product.product_image) }}" 
            alt="{{ product.title }}" 
-           class="max-h-80 w-auto object-contain" />
+           class="max-h-80 w-auto object-contain rounded-lg" />
     </div>
 
     <!-- Dots -->
@@ -25,17 +25,17 @@
   </div>
 
   <!-- Product Info -->
-  <div class="w-full max-w-lg mt-6 bg-white border rounded-xl shadow p-6 space-y-2 text-left">
-  <p><strong>Category:</strong> {{ product.category }}</p>
-  <p><strong>Description:</strong> {{ product.description }}</p>
-  <p class="text-green-600 font-bold text-lg">Price : ₹{{ product.price }}</p>
+  <div class="w-full max-w-lg mt-6 bg-white border border-green-200 rounded-xl shadow p-6 space-y-3 text-left">
+    <p class="flex items-center gap-2"><i class="fa-solid fa-list text-green-600"></i><strong>Category:</strong> {{ product.category }}</p>
+    <p class="flex items-start gap-2"><i class="fa-solid fa-align-left text-green-600 mt-1"></i><strong>Description:</strong> {{ product.description }}</p>
+    <p class="flex items-center gap-2 text-green-700 font-bold text-lg"><i class="fa-solid fa-indian-rupee-sign"></i> Price : ₹{{ product.price }}</p>
 
-  <!-- Add to Cart -->
-  <a href="{{ url_for('add_to_cart', product_id=product.product_id) }}" 
-    class="block w-full mt-6 bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg text-center font-semibold transition">
-    Add to Cart
-  </a>
-</div>
+    <!-- Add to Cart -->
+    <a href="{{ url_for('add_to_cart', product_id=product.product_id) }}" 
+       class="block w-full mt-4 bg-green-700 hover:bg-green-800 text-white px-6 py-3 rounded-lg text-center font-semibold transition flex items-center justify-center gap-2">
+       <i class="fa-solid fa-cart-plus"></i> Add to Cart
+    </a>
+  </div>
 
 </div>
 

@@ -2,20 +2,20 @@
 {% block content %}
 
 <!-- Landing Page Container -->
-<div class="min-h-screen bg-gray-50 text-gray-800 flex flex-col">
+<div class="min-h-screen bg-green-50 text-gray-800 flex flex-col">
 
   <!-- 🔍 Search + Filter + Group Section -->
   {% include "product_control.html" %}
 
   <!-- 🖼️ Banner / Hero Slider Section -->
-  <div id="bannerCarousel" class="relative overflow-hidden h-64 flex items-center justify-center bg-gray-100">
-    {% for product in products[:3] %}
+  <div id="bannerCarousel" class="relative overflow-hidden h-64 flex items-center justify-center bg-green-100 rounded-xl shadow-md mx-6 mt-6">
+    {% for product in products[:5] %}
     <div class="carousel-item absolute inset-0 flex items-center justify-center transition-opacity duration-1000 {% if loop.first %}opacity-100 z-10{% else %}opacity-0 z-0{% endif %}">
         <img src="{{ url_for('static', filename=product.product_image) }}" 
-            alt="{{ product.title }}" 
-            class="max-h-64 w-auto object-contain" />
-        <div class="absolute bottom-4 left-4 bg-black bg-opacity-50 text-white px-3 py-1 rounded">
-        {{ product.title }}
+             alt="{{ product.title }}" 
+             class="max-h-64 w-auto object-contain rounded-lg" />
+        <div class="absolute bottom-4 left-4 bg-green-700 bg-opacity-80 text-white px-3 py-1 rounded font-medium">
+          {{ product.title }}
         </div>
     </div>
     {% endfor %}
@@ -23,8 +23,8 @@
 
   <!-- Product Grid -->
   <section class="px-6 py-6">
-    <h2 class="text-xl font-semibold mb-4">
-      Featured Products <span id="productCount">({{ products|length }})</span>
+    <h2 class="text-2xl font-semibold mb-4 text-green-800">
+      Featured Products <span id="productCount" class="text-gray-700 text-lg">({{ products|length }})</span>
     </h2>
     <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       {% for product in products %}
@@ -33,7 +33,7 @@
     </div>
 
     <!-- No results -->
-    <p id="noResults" class="hidden text-center text-red-500 mt-6">0 results found.</p>
+    <p id="noResults" class="hidden text-center text-red-600 mt-6 font-medium">0 results found.</p>
   </section>
 </div>
 
