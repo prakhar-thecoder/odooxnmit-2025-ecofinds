@@ -1,27 +1,19 @@
-<div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 ease-in-out">
-    <div class="relative">
-        <a href="/products/{{ product.product_id }}">
-            <img class="w-full h-56 object-cover" src="{{ product.product_image or '/static/placeholders/default.png' }}" alt="Product Image">
-        </a>
-        <div class="absolute top-2 right-2 bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">
-            {{ product.item_condition }}
-        </div>
-    </div>
+<div class="bg-white border rounded-xl shadow hover:shadow-lg transition" 
+     data-price="{{ product.price }}" 
+     data-category="{{ product.category }}">
+    
+    <img src="{{ url_for('static', filename=product.product_image) }}" 
+         alt="{{ product.title }}" 
+         class="h-40 w-full object-cover" />
+    
     <div class="p-4">
-        <span class="text-xs text-gray-500 font-medium uppercase">{{ product.category }}</span>
-        <a href="/products/{{ product.product_id }}" class="block mt-1 hover:text-green-700">
-            <h3 class="text-lg font-bold truncate">{{ product.title }}</h3>
+        <h3 class="text-lg font-bold">{{ product.title }}</h3>
+        <p class="text-sm text-gray-500">{{ product.category }}</p>
+        <p class="text-green-600 font-semibold mt-2">₹{{ product.price }}</p>
+        
+        <a href="{{ url_for('product_detail', product_id=product.product_id) }}" 
+           class="block mt-3 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-center">
+            View
         </a>
-        {% if product.brand %}
-        <p class="text-sm text-gray-600 mt-1">Brand: {{ product.brand }}</p>
-        {% endif %}
-        <div class="mt-3"><span class="text-2xl font-bold text-gray-900">₹{{ product.price }}</span></div>
-        <div class="mt-4 pt-4 border-t border-gray-200 flex items-center justify-between">
-            <div class="flex items-center">
-                <img class="w-8 h-8 rounded-full object-cover mr-2" src="{{ current_user.profile_pic or '/static/placeholders/user.png' }}" alt="Seller Avatar">
-                <span class="text-sm font-medium text-gray-700">{{ current_user.username }}</span>
-            </div>
-            <span class="text-xs text-gray-500">Posted {{ product.created_at.strftime('%b %d') }}</span>
-        </div>
     </div>
 </div>

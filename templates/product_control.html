@@ -1,0 +1,85 @@
+<!-- _product_controls.html -->
+<section class="px-6 py-6">
+  <div class="flex flex-col md:flex-row items-center gap-3 justify-between">
+
+    <!-- Search -->
+    <div class="flex items-center w-full md:w-1/2">
+      <input id="searchInput" 
+             type="text" 
+             placeholder="Search..." 
+             class="w-full px-4 py-2 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-green-500" 
+             oninput="handleSearch()" />
+      <button class="px-4 py-2 bg-green-600 text-white rounded-r-lg hover:bg-green-700">Search</button>
+    </div>
+
+    <!-- Filter + Sort + Group By -->
+    <div class="flex gap-2">
+      <select id="sortSelect" class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300" onchange="sortProducts()">
+        <option value="">Sort By</option>
+        <option value="high">Price: High to Low</option>
+        <option value="low">Price: Low to High</option>
+      </select>
+      <select id="groupSelect" class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300" onchange="groupProducts()">
+        <option value="">Group By Category</option>
+        {% for category in ["Electronics","Furniture","Clothing","Books","Others"] %}
+        <option value="{{ category }}">{{ category }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+</section>
+<!-- Scripts (no change) -->
+<script>
+/* Search Filtering */
+function handleSearch() {
+  const input = document.getElementById('searchInput').value.toLowerCase();
+  const products = document.querySelectorAll('#productGrid > div');
+  let visibleCount = 0;
+
+  products.forEach(p => {
+    const title = p.querySelector('h3').textContent.toLowerCase();
+    if (title.includes(input)) {
+      p.style.display = "block";
+      visibleCount++;
+    } else {
+      p.style.display = "none";
+    }
+  });
+
+  document.getElementById("productCount").textContent = `(${visibleCount})`;
+  document.getElementById("noResults").style.display = visibleCount === 0 ? "block" : "none";
+}
+
+/* Sort Products */
+function sortProducts() {
+  const grid = document.getElementById('productGrid');
+  const products = Array.from(grid.children);
+  const sortValue = document.getElementById('sortSelect').value;
+
+  if(sortValue === "high") {
+    products.sort((a,b) => b.dataset.price - a.dataset.price);
+  } else if(sortValue === "low") {
+    products.sort((a,b) => a.dataset.price - b.dataset.price);
+  }
+
+  products.forEach(p => grid.appendChild(p));
+}
+
+/* Group Products */
+function groupProducts() {
+  const grid = document.getElementById('productGrid');
+  const products = Array.from(grid.children);
+  const groupValue = document.getElementById('groupSelect').value;
+
+  products.forEach(p => {
+    if(groupValue === "" || p.dataset.category === groupValue) {
+      p.style.display = "block";
+    } else {
+      p.style.display = "none";
+    }
+  });
+  document.getElementById("productCount").textContent = `(${products.filter(p => p.style.display !== "none").length})`;
+}
+
+
+</script>

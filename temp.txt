@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- Landing Page Container -->
+<div class="min-h-screen bg-gray-900 text-white flex flex-col">
+
+  <!-- Banner / Hero Section -->
+  <section class="w-full">
+    <div class="relative w-full h-64 bg-gray-800 flex items-center justify-center">
+      <h1 class="text-3xl font-bold">Banner Image</h1>
+    </div>
+  </section>
+
+  <!-- Search + Filter Section -->
+  <section class="px-4 py-6">
+    <div class="flex flex-col md:flex-row items-center gap-3 justify-between">
+      <!-- Search -->
+      <div class="flex items-center w-full md:w-1/2">
+        <input id="searchInput" 
+               type="text" 
+               placeholder="Search..." 
+               class="w-full px-4 py-2 rounded-l-lg text-black focus:outline-none" 
+               oninput="handleSearch()" />
+        <button class="px-4 py-2 bg-blue-600 rounded-r-lg hover:bg-blue-700">Search</button>
+      </div>
+
+      <!-- Filter + Group By -->
+      <div class="flex gap-2">
+        <button class="px-4 py-2 bg-gray-700 rounded-lg hover:bg-gray-600">Filter</button>
+        <button class="px-4 py-2 bg-gray-700 rounded-lg hover:bg-gray-600">Group By</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Category Section -->
+  <section class="px-4 py-6">
+    <h2 class="text-xl font-semibold mb-4">All Categories</h2>
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+      {% for category in ["Electronics","Furniture","Clothing","Books","Others"] %}
+      <a href="{{ url_for('products_by_category', category=category) }}" 
+         class="bg-gray-800 hover:bg-gray-700 rounded-lg py-6 text-center">
+        {{ category }}
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Product Grid -->
+  <section class="px-4 py-6">
+    <h2 class="text-xl font-semibold mb-4">Featured Products <span id="productCount">({{ products|length }})</span></h2>
+    <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      {% for product in products %}
+      <div class="bg-gray-800 rounded-xl shadow-md overflow-hidden hover:scale-105 transition">
+        <img src="{{ url_for('static', filename=product.product_image) }}" 
+             alt="{{ product.title }}" 
+             class="h-40 w-full object-cover" />
+        <div class="p-4">
+          <h3 class="text-lg font-bold">{{ product.title }}</h3>
+          <p class="text-sm text-gray-400">{{ product.category }}</p>
+          <p class="text-blue-400 font-semibold mt-2">₹{{ product.price }}</p>
+          <a href="{{ url_for('product_detail', product_id=product.product_id) }}" 
+             class="block mt-3 bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg text-center">
+            View
+          </a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- No results -->
+    <p id="noResults" class="hidden text-center text-red-400 mt-6">0 results found.</p>
+  </section>
+</div>
+
+<!-- Real-time Search Filtering -->
+<script>
+function handleSearch() {
+  const input = document.getElementById('searchInput').value.toLowerCase();
+  const products = document.querySelectorAll('#productGrid > div');
+  let visibleCount = 0;
+
+  products.forEach(p => {
+    const title = p.querySelector('h3').textContent.toLowerCase();
+    if (title.includes(input)) {
+      p.style.display = "block";
+      visibleCount++;
+    } else {
+      p.style.display = "none";
+    }
+  });
+
+  document.getElementById("productCount").textContent = `(${visibleCount})`;
+  document.getElementById("noResults").style.display = visibleCount === 0 ? "block" : "none";
+}
+</script>
+
+{% endblock %}
+
+
+
+
+
+
+
+from flask import Flask, render_template, request, redirect, url_for
+import db_utils
+
+app = Flask(__name__)
+
+# -------------------- HOME --------------------
+@app.route('/')
+def index():
+    # Only fetch fields needed for product listing
+    query = """
+        SELECT product_id, title, price, product_image, category 
+        FROM products
+    """
+    products = db_utils.select_query(query)
+    return render_template("index.html", products=products)
+
+
+# -------------------- PRODUCT DETAIL --------------------
+@app.route('/product/<int:product_id>')
+def product_detail(product_id):
+    # Fetch all fields for a single product
+    query = """
+        SELECT product_id, user_id, title, description, category, price, quantity,
+               item_condition, year_of_manufacture, brand, model,
+               length, width, height, weight, material, color,
+               original_packaging, manual_included, working_condition,
+               product_image, created_at
+        FROM products
+        WHERE product_id = %s
+    """
+    product = db_utils.select_query(query, (product_id,))
+    if not product:
+        return "Product not found", 404
+    return render_template("product_details.html", product=product[0])
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
