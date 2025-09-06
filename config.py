@@ -1,5 +1,4 @@
 MYSQL_HOST = "localhost"
 MYSQL_USER = "root"
-MYSQL_PASSWORD = "yourpassword"
+MYSQL_PASSWORD = ""
 MYSQL_DATABASE = "ecofinds"
-SECRET_KEY = "change_this"
