@@ -222,6 +222,15 @@ def add_product():
 
     return render_template("add_product.html", errors=errors, success=success)
 
+@app.route("/my-products")
+@require_auth
+def my_products():
+    user_id = request.user_id
+    products = db_utils.select_query(
+        "SELECT * FROM products WHERE user_id=%s ORDER BY created_at DESC",
+        (user_id,)
+    )
+    return render_template("my_products.html", products=products)
 
 
 if __name__ == '__main__':
